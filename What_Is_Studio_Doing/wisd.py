@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(
                     epilog='Default behavior is to list processes.  Kill mode loops until no processes are left.')
                     
 parser.add_argument('-k', '--kill', action='store_true')
-parser.add_argument('--cwd', action='store_true')
+parser.add_argument('--cwd', action='store_true', help='display working directory for top level processes')
 parser.add_argument('-v', '--verbose', action='store_true')
 parser.add_argument('--replace', help='replace default base folders with comma delimited list')
 parser.add_argument('--add', help='supplement default base folders with comma delimited list')
