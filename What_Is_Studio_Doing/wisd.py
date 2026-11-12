@@ -13,18 +13,26 @@ parser = argparse.ArgumentParser(
 parser.add_argument('-k', '--kill', action='store_true')
 parser.add_argument('--cwd', action='store_true')
 parser.add_argument('-v', '--verbose', action='store_true')
-                    
+parser.add_argument('--replace', help='replace default base folders with comma delimited list')
+parser.add_argument('--add', help='supplement default base folders with comma delimited list')
+
 args = parser.parse_args()
 
 OS = platform.system()
-if 'Linux' == OS :
+if None != args.replace :
+    bases = args.replace.split(',')
+elif 'Linux' == OS :
     bases = [os.environ.get("HOME")+'/.silabs','/opt/SimplicityInstaller']
 elif 'Windows' == OS :
     bases = [os.environ.get("HOME")+'\\.silabs']
+elif 'Darwin' == OS :
+    bases = [os.environ.get("HOME")+'/.silabs','/Application/SimplicityInstaller.app']
 else :
     print('Unhandled OS: %s'%(OS))
     quit()
-
+if None != args.add :
+    bases += args.add.split(',')
+    
 class Processes :
     def __init__(self) :
         self.ppid = {}
